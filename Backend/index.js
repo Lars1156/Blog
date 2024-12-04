@@ -6,7 +6,7 @@ const app = express();
 
 
 // database Connection 
-connection('mongodb://localhost:27017/blog-System').then(()=>{
+connection('mongodb://localhost:27017/blog-system').then(()=>{
     console.log("Database Connection is Sucessfully");
     
 }).catch((error)=>{

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controller/userController');
 const blogController = require('../controller/blogController');
-const authenticate = require('../middleware/authenticate');
+const authenticate = require('../middleware/auth');
 // user api 
 
 router.post('/register' , userController.registerUser);
