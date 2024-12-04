@@ -1,16 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const connection = require('./connection');
+const{connection} = require('./connection');
 const routerAPI = express.Router();
 const app = express();
 
 
 // database Connection 
-connection('').then(()=>{
-    console.log("Database Connection SucessFully ");
+connection('mongodb://localhost:27017/blog-System').then(()=>{
+    console.log("Database Connection is Sucessfully");
     
 }).catch((error)=>{
-    console.log("Connection is not successFully ");
+    console.log("Connection Faild to data base", error);
     
 })
 // Middleware
