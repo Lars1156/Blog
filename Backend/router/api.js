@@ -8,4 +8,6 @@ router.post('/register' , userController.registerUser);
 router.post('/login' , userController.loginUser);
 router.get('/getall' , userController.getAllUser);
 
+// blog API 
+
 module.exports = router;
