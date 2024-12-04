@@ -19,4 +19,6 @@ const authenticate = async(req,res , next ) =>{
         return res.status(401).json({ message: 'Unauthorized: Invalid or expired token' });
 
     }
-}
+};
+
+module.exports = authenticate;
