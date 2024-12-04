@@ -8,9 +8,9 @@ const registerUser = async(req,res)=>{
     console.log("**User details" , req.body);
     try {
         //  Cheacking the All valid Filds will entered or not
-           if(!userName || !email || password || role){
-             return res.status(400).json({msg:"Please enter all fields"});
-           }
+          //  if(!userName || !email || password || role){
+          //    return res.status(400).json({msg:"Please enter all fields"});
+          //  }
            const existingEmail = await User.findOne({email});
            if(existingEmail){
              return res.status(400).json({msg:"Email already exist"});
@@ -20,6 +20,7 @@ const registerUser = async(req,res)=>{
            });
         //    creating the new User 
            const addData = await User (user);
+           console.log('**add user ' , addData);
            await addData.save();
            return res.status(200).json({msg:"User Created Successfully"});
     } catch (error) {
