@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const{connection} = require('./connection');
-const routerAPI = express.Router();
+const routerAPI = require('./router/api');
 const app = express();
 
 
