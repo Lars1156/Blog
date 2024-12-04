@@ -41,4 +41,6 @@ const createBlog = async(req,res)=>{
           error: error.message,
         });
     }
-}
+};
+
+module.exports = {createBlog}
