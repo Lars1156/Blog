@@ -39,7 +39,7 @@ const loginUser = async(req,res)=>{
          if(!isMatch){
             return res.status(400).json({msg:"Invalid Password"});
          }
-         const token = jwt.sign({id:user._id , role:user.role} , secret , {expiresIn:"1h"});
+         const token = jwt.sign({userId:user._id , role:user.role} , secret , {expiresIn:"1h"});
          return res.status(200).json({token, msg:"Login Successfull"});
     } catch (error) {
         

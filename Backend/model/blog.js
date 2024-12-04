@@ -1,6 +1,4 @@
 const mongoose = require('mongodb');
-const { type } = require('os');
-
 const blogSchema = new mongoose.Schema({
     title : {
         type : "String", 
@@ -23,3 +21,5 @@ const blogSchema = new mongoose.Schema({
         },
     ],
 },{ timestamps: true });
+
+module.exports = mongoose.model('Blog', blogSchema);
