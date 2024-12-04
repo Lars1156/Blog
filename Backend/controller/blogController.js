@@ -1,6 +1,5 @@
 const User = require('../model/user');
 const Blog = require('../model/blog');
-const authenticate = require('../middleware/auth');
 
 
 const createBlog = async(req,res)=>{

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controller/userController');
+const blogController = require('../controller/blogController');
 const authenticate = require('../middleware/authenticate');
 // user api 
 
@@ -9,5 +10,6 @@ router.post('/login' , userController.loginUser);
 router.get('/getall' , userController.getAllUser);
 
 // blog API 
+router.post ('/createblog' , authenticate, blogController.createBlog);
 
 module.exports = router;
