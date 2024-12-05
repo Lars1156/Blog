@@ -201,7 +201,8 @@ const deleteBlog = async (req, res) => {
             message: 'Forbidden: Only the author can delete this blog',
           });
          }
-         await blog.remove();
+         await Blog.findByIdAndDelete(blogId);
+
          res.status(200).json({ msg:"blog deleted successfully" });
   } catch (error) {
     console.error('Error adding comment:', error);
@@ -211,6 +212,26 @@ const deleteBlog = async (req, res) => {
       error: error.message,
     });
   }
+};
+const getAllBlog = async (req, res) => {
+   try {
+        const blogs = await Blog.find().populate('author' , 'userName , email') ;
+        if(blogs === 0){
+          return res.status(404).json({ msg:"No blogs found" });
+        }
+        res.status(200).json({
+          success: true,
+          message: 'Blogs fetched successfully',
+          blogs,
+        });
+   } catch (error) {
+    console.error('Error adding comment:', error);
+      res.status(500).json({
+      success: false,
+      message: 'Error adding comment',
+      error: error.message,
+    });
+   }
 }
 
-module.exports = {createBlog , likeBlogs , addComment , upadteBlog ,deleteBlog};
+module.exports = {createBlog , likeBlogs , addComment , upadteBlog ,deleteBlog, getAllBlog};
