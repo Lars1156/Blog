@@ -139,4 +139,47 @@ const addComment = async (req, res) => {
   }
 };
 
-module.exports = {createBlog , likeBlogs , addComment};
+// upadting the blog by the Author 
+const upadteBlog = async (req, res) => {
+  try {
+       const user = req.user;
+       const { blogId } = req.params;
+       const { title, content } = req.body;
+       // Ensure the user is logged in
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized: User not logged in',
+      });
+    };
+    // Ensure the blog exists
+     const blog = await Blog.findById(blogId);
+     if (!blog) {
+       return res.status(404).json({ msg:"blog not found" });
+     }
+     // Ensure the logged-in user is the author of the blog
+     if (String(blog.author) !== String(user._id)) {
+        return res.status(403).json({
+        success: false,
+        message: 'Forbidden: Only the author can update this blog',
+       });
+     };
+     // Update the blog
+      // Update the fields if provided
+    if (title) blog.title = title;
+    if (content) blog.content = content;
+
+    // Save the updated blog
+    const updatedBlog = await blog.save();
+     res.status(200).json({ msg:"blog updated successfully"  , upadteBlog});
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error adding comment',
+      error: error.message,
+    });
+  }
+}
+
+module.exports = {createBlog , likeBlogs , addComment , upadteBlog};
