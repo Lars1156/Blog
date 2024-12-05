@@ -89,5 +89,41 @@ const likeBlogs = async(req,res)=>{
           error: error.message,
         });
     }
-}
-module.exports = {createBlog , likeBlogs}
+};
+// Commite Controller by The User to Blog
+const commitBlog = async (req, res) => {
+  try {
+       const user = req.user;
+       const {blogId} = req.params;
+       console.log(blogId);
+       console.log("User", user);
+       const{commit} = req.body;
+       console.log(commit);
+       if(!user){
+         return res.status(402).json({success: false, message: 'Unauthorized: User not logged in'});
+       }
+       if (!comment) {
+        return res.status(400).json({ success: false, message: 'Comment cannot be empty' });
+      }
+      const blog = await Blog.findById(blogId);
+      if (!blog) {
+        return res.status(404).json({ msg: "Blog not found" });
+      }
+      blog.comments.push({
+        user: user._id,
+        comment,
+      });
+  
+      await blog.save();
+  
+      res.status(200).json({ success: true, message: 'Comment added successfully', blog });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+        res.status(500).json({
+          success: false,
+          message: 'Error fetching users',
+          error: error.message,
+        });
+  }
+};
+module.exports = {createBlog , likeBlogs , commitBlog};
