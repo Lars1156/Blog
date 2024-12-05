@@ -180,6 +180,37 @@ const upadteBlog = async (req, res) => {
       error: error.message,
     });
   }
+};
+// delete the Blog by the Author Controller 
+const deleteBlog = async (req, res) => {
+  try {
+         const user = req.user;
+         const{blogId} = req.params;
+         // Ensure the user is logged in
+         if (!user) {
+           return res.status(401).json({ msg:"user is not Found"});
+         }
+         // Ensure the blog exists
+         const blog = await Blog.findById(blogId);
+         if (!blog) {
+           return res.status(404).json({ msg:"blog not found" });
+         }
+         if((String (blog.author) !== String(user._id))){
+          return res.status(403).json({
+            success: false,
+            message: 'Forbidden: Only the author can delete this blog',
+          });
+         }
+         await blog.remove();
+         res.status(200).json({ msg:"blog deleted successfully" });
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error adding comment',
+      error: error.message,
+    });
+  }
 }
 
-module.exports = {createBlog , likeBlogs , addComment , upadteBlog};
+module.exports = {createBlog , likeBlogs , addComment , upadteBlog ,deleteBlog};

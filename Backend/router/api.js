@@ -14,5 +14,6 @@ router.post ('/createblog' , authenticate, blogController.createBlog);
 router.post('/:blogId/like', authenticate, blogController.likeBlogs);
 router.post('/:blogId/commit' , authenticate , blogController.addComment);
 router.put('/:blogId', authenticate , blogController.upadteBlog);
+router.delete('/:blogId' , authenticate , blogController.deleteBlog );
 
 module.exports = router;
