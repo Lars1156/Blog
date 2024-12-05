@@ -9,6 +9,7 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  
   author: {
     type: mongoose.Schema.Types.ObjectId, // Correctly reference ObjectId
     ref: 'User', // Reference to the User model
@@ -28,6 +29,11 @@ const blogSchema = new mongoose.Schema({
       },
     ],
     default: [], // Initialize to an empty array
+  },
+  category: {
+    type: String, 
+    enum: ['Tech', 'Health', 'Lifestyle', 'Education', 'Travel'],
+    required: true, 
   },
   
 }, { timestamps: true }); // Automatically add createdAt and updatedAt fields

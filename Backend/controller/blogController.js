@@ -20,16 +20,17 @@ const createBlog = async (req, res) => {
       });
     }
 
-    const { title, content } = req.body;
+    const { title, content ,   category } = req.body;
 
-    if (!title || !content) {
-      return res.status(400).json({ success: false, message: 'Title and Content are required' });
+    if (!title || !content || !category) {
+      return res.status(400).json({ success: false, message: 'Title and Content & Category are required' });
     }
 
     // Creating a new blog with empty comments
     const newBlog = new Blog({
       title,
       content,
+      category,
       author: user._id,
       comments: [], // Set default empty comments
     });
