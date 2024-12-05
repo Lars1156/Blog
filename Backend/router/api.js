@@ -16,5 +16,6 @@ router.post('/:blogId/commit' , authenticate , blogController.addComment);
 router.put('/:blogId', authenticate , blogController.upadteBlog);
 router.delete('/:blogId' , authenticate , blogController.deleteBlog );
 router.get('/getBlog' , authenticate , blogController.getAllBlog);
+router.get('/getAllBlog' , blogController.getAllBlogAuther);
 
 module.exports = router;

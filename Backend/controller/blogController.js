@@ -232,6 +232,30 @@ const getAllBlog = async (req, res) => {
       error: error.message,
     });
    }
+};
+// getAllBolgAuther created by the all userss
+const getAllBlogAuther = async (req, res) => {
+  try {
+       const blogs = await Blog.find().populate('author' , 'userName , email') ;
+       if (!blogs || blogs.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'No blogs found',
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: 'Blogs fetched successfully',
+        blogs: blogs,
+      });  
+  } catch (error) {
+    console.error('Error fetching blogs:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch blogs',
+      error: error.message,
+    });
+  }
 }
 
-module.exports = {createBlog , likeBlogs , addComment , upadteBlog ,deleteBlog, getAllBlog};
+module.exports = {createBlog , likeBlogs , addComment , upadteBlog ,deleteBlog, getAllBlog, getAllBlogAuther};
