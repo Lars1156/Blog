@@ -51,8 +51,7 @@ const createBlog = async (req, res) => {
     });
   }
 };
-
-
+// Add the likes to the User to the Blog
 const likeBlogs = async(req,res)=>{
     try {
          
@@ -60,8 +59,6 @@ const likeBlogs = async(req,res)=>{
          const{blogId} = req.params;
          console.log(blogId);
          console.log("User", user);
-         
-         
           // Check if the user is logged in
          if(!user){
             return res.status(401).json({ msg: "Unauthorized: User not logged in" })
@@ -139,7 +136,6 @@ const addComment = async (req, res) => {
     });
   }
 };
-
 // upadting the blog by the Author 
 const upadteBlog = async (req, res) => {
   try {
