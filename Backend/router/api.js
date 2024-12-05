@@ -12,6 +12,6 @@ router.get('/getall' , userController.getAllUser);
 // blog API 
 router.post ('/createblog' , authenticate, blogController.createBlog);
 router.post('/:blogId/like', authenticate, blogController.likeBlogs);
-router.post('/:blogId/commit' , authenticate , blogController.commitBlog);
+router.post('/:blogId/commit' , authenticate , blogController.addComment);
 
 module.exports = router;

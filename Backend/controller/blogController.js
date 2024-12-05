@@ -2,45 +2,55 @@ const User = require('../model/user');
 const Blog = require('../model/blog');
 
 
-const createBlog = async(req,res)=>{
-    try {
-        const user = req.user
-        if (!user) {
-            return res.status(401).json({
-              success: false,
-              message: 'Unauthorized: User not logged in',
-            });
-          }
-    //   if cheack the user As the Auther Role 
-         if (user.role !== 'author') {
-            return res.status(403).json({
-                success: false,
-                message: 'Forbidden: Only Authors can create blogs', })
-         } 
-         const {title , content} =req.body;
-        //  valide the All inputs 
-        if(!title || !content){
-            return res.status(400).json({ msg:"Title & Content is required" })
-        }
-        // creating a New Blog
-        const newBlog = await Blog(
-            {
-                title , 
-                content , 
-                author : user._id
-            }
-        );
-       await newBlog.save();
-       res.status(201).json({ msg: "Blog created successfully", newBlog });
-    } catch (error) {
-        console.error('Error fetching users:', error);
-        res.status(500).json({
-          success: false,
-          message: 'Error fetching users',
-          error: error.message,
-        });
+const createBlog = async (req, res) => {
+  try {
+    const user = req.user;
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized: User not logged in',
+      });
     }
+
+    if (user.role !== 'author') {
+      return res.status(403).json({
+        success: false,
+        message: 'Forbidden: Only Authors can create blogs',
+      });
+    }
+
+    const { title, content } = req.body;
+
+    if (!title || !content) {
+      return res.status(400).json({ success: false, message: 'Title and Content are required' });
+    }
+
+    // Creating a new blog with empty comments
+    const newBlog = new Blog({
+      title,
+      content,
+      author: user._id,
+      comments: [], // Set default empty comments
+    });
+
+    await newBlog.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Blog created successfully',
+      blog: newBlog,
+    });
+  } catch (error) {
+    console.error('Error creating blog:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error creating blog',
+      error: error.message,
+    });
+  }
 };
+
 
 const likeBlogs = async(req,res)=>{
     try {
@@ -91,39 +101,42 @@ const likeBlogs = async(req,res)=>{
     }
 };
 // Commite Controller by The User to Blog
-const commitBlog = async (req, res) => {
+const addComment = async (req, res) => {
   try {
-       const user = req.user;
-       const {blogId} = req.params;
-       console.log(blogId);
-       console.log("User", user);
-       const{commit} = req.body;
-       console.log(commit);
-       if(!user){
-         return res.status(402).json({success: false, message: 'Unauthorized: User not logged in'});
-       }
-       if (!comment) {
-        return res.status(400).json({ success: false, message: 'Comment cannot be empty' });
-      }
-      const blog = await Blog.findById(blogId);
-      if (!blog) {
-        return res.status(404).json({ msg: "Blog not found" });
-      }
-      blog.comments.push({
-        user: user._id,
-        comment,
-      });
-  
-      await blog.save();
-  
-      res.status(200).json({ success: true, message: 'Comment added successfully', blog });
+    const user = req.user;
+    const { blogId } = req.params;
+    const { comment } = req.body;
+
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'Unauthorized: User not logged in' });
+    }
+
+    if (!comment || comment.trim() === '') {
+      return res.status(400).json({ success: false, message: 'Comment cannot be empty' });
+    }
+
+    const blog = await Blog.findById(blogId);
+
+    if (!blog) {
+      return res.status(404).json({ success: false, message: 'Blog not found' });
+    }
+
+    blog.comments.push({ user: user._id, comment });
+    await blog.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Comment added successfully',
+      blog,
+    });
   } catch (error) {
-    console.error('Error fetching users:', error);
-        res.status(500).json({
-          success: false,
-          message: 'Error fetching users',
-          error: error.message,
-        });
+    console.error('Error adding comment:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error adding comment',
+      error: error.message,
+    });
   }
 };
-module.exports = {createBlog , likeBlogs , commitBlog};
+
+module.exports = {createBlog , likeBlogs , addComment};

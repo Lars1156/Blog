@@ -20,12 +20,16 @@ const blogSchema = new mongoose.Schema({
       ref: 'User',
     },
   ],
-  comments: [
-    {
-      user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // User reference
-      comment: { type: String, required: true }, // Actual comment text
-    },
-  ],
+  comments: {
+    type: [
+      {
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        comment: { type: String, required: true },
+      },
+    ],
+    default: [], // Initialize to an empty array
+  },
+  
 }, { timestamps: true }); // Automatically add createdAt and updatedAt fields
 
 module.exports = mongoose.model('Blog', blogSchema);
