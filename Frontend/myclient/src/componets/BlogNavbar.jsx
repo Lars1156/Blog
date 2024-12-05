@@ -6,7 +6,6 @@ const BlogNavbar = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container>
-        {/* Logo and Title */}
         <Navbar.Brand as={Link} to="/">
           <img
             src="/path-to-blog-icon.png"
