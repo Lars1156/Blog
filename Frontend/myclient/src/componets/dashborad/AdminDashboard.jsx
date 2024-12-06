@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button, Nav } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom'; // For navigation
-import { BoxArrowRight } from 'react-bootstrap-icons'; // Icon for logout
+import { Link, useNavigate } from 'react-router-dom'; 
+import { BoxArrowRight } from 'react-bootstrap-icons'; 
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ const AdminDashboard = () => {
  
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/'); // Redirect to home page
+    navigate('/login'); 
   };
 
   return (
