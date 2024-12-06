@@ -26,7 +26,9 @@ const LoginPage = () => {
                 setError('Invalid Email or Password');
              }
             //  rerender the role wise components DashBorads
-            navigate('/author-dashboard');
+            if( user === 'admin'){
+                navigate('/admin-dashboard')
+            }
           
         } catch (error) {
             setError(error.response?.data?.message || 'An error occurred. Please try again.');
@@ -36,7 +38,7 @@ const LoginPage = () => {
 
     return(
         <div>
-                     <div className="login-page">
+     <div className="login-page">
       <Container className="d-flex justify-content-center align-items-center min-vh-100">
         <Row>
           <Col md={12}>
@@ -44,14 +46,11 @@ const LoginPage = () => {
               <Card.Body>
                 <h3 className="text-center mb-4">Login to Your Account</h3>
 
-                {/* Success Message */}
                 {success && <Alert variant="success">{success}</Alert>}
 
-                {/* Error Message */}
                 {error && <Alert variant="danger">{error}</Alert>}
 
                 <Form onSubmit={handleLogin}>
-                  {/* Email Field */}
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
@@ -62,8 +61,6 @@ const LoginPage = () => {
                       required
                     />
                   </Form.Group>
-
-                  {/* Password Field */}
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
                     <div className="password-field">
@@ -83,14 +80,10 @@ const LoginPage = () => {
                       </Button>
                     </div>
                   </Form.Group>
-
-                  {/* Login Button */}
                   <Button variant="dark" type="submit" className="w-100">
                     Login
                   </Button>
                 </Form>
-
-                {/* Register Link */}
                 <div className="mt-3 text-center">
                   <span>Don't have an account? </span>
                   <Button variant="link" onClick={() => navigate('/register')}>
@@ -102,8 +95,6 @@ const LoginPage = () => {
           </Col>
         </Row>
       </Container>
-
-      {/* Styles for Password Field */}
       <style jsx>{`
         .password-field {
           position: relative;
