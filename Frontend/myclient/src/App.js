@@ -12,7 +12,8 @@ function App() {
        <Routes>
             <Route path='/' element={<HomePage/>}/>
             <Route path="/login" element={<LoginPage/>}/>
-            <Route path='/admin-dashboard' element={<AdminDashboard/>}/>
+           s <Route path='/admin-dashboard/' element={<AdminDashboard/>}>
+            </Route>
              <Route path='/reader-dashboard' element={<ReaderDashBoard/>}/>
        </Routes>
     </div>

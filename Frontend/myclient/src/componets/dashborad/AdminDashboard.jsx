@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Container, Offcanvas, Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { BoxArrowRight } from "react-bootstrap-icons";
 
 const AdminNavBar = ({ adminName }) => {
@@ -60,6 +60,7 @@ const AdminNavBar = ({ adminName }) => {
               <Nav.Link as={Link} to="/manage-users" className="text-dark">
                 Manage Users
               </Nav.Link>
+              <Outlet/>
             </Nav.Item>
           </Nav>
         </div>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
-
+import { Navbar , Nav, Card, Button, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 const ReaderDashboard = ({ token }) => {
   const [blogs, setBlogs] = useState([]);
   const [likes, setLikes] = useState([]);
+  const navigate  = useNavigate()
 
   // Fetch all blogs
   useEffect(() => {
@@ -37,7 +38,7 @@ const ReaderDashboard = ({ token }) => {
       }
 
       // Send like request
-      await axios.post(`http://localhost:4007/api/${blogId}/like`, null, {
+      await axios.post(`http://localhost:4007/api/${blogId}/like`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -55,10 +56,25 @@ const ReaderDashboard = ({ token }) => {
       }
     }
   };
+  const handleLogout = () => {
+     localStorage.removeItem("token"); // Remove token from stora
+     navigate("/login"); // Redirect to login page
+  };
 
   return (
-    <Container className="mt-4">
-      <h2 className="text-center">Reader Dashboard</h2>
+    
+   
+   <Container className="mt-4">
+      <Navbar bg="light" expand="lg" className="mb-3">
+        <Container>
+          <Navbar.Brand>Reader Dashboard</Navbar.Brand>
+          <Nav className="ms-auto">
+            <Button variant="danger" onClick={handleLogout}>
+              Logout
+            </Button>
+          </Nav>
+        </Container>
+      </Navbar>
       <Row>
         {blogs.length > 0 ? (
           blogs.map((blog) => (
