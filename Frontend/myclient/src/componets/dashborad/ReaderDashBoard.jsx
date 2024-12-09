@@ -1,5 +1,5 @@
 import React, { useState, useEffect  } from "react";
-import { Container, Row, Col, Card, Button, Form, InputGroup } from "react-bootstrap";
+import { Navbar,Nav ,Container, Row, Col, Card, Button, Form, InputGroup } from "react-bootstrap";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import { BoxArrowRight } from "react-bootstrap-icons";
@@ -66,18 +66,21 @@ const handleLogout = () => {
   };
   return(
      <Container fluid>
-         <Row className="bg-light py-3 mb-4">
-        <Col>
-          <h3>Welcome to the Blogs </h3>
-        </Col>
-        <Button
+         <Navbar bg="light" expand="lg" className="px-3">
+        <Container fluid>
+          <Navbar.Brand>
+            <h5>Welcome,  Blogs!</h5>
+          </Navbar.Brand>
+         
+          <Button
             variant="outline-dark"
             className="d-none d-lg-block"
             onClick={handleLogout}
           >
             <BoxArrowRight /> Logout
           </Button>
-      </Row>
+        </Container>
+      </Navbar>
       <Row>
         {blogs.map((blog) => (
           <Col md={6} lg={4} key={blog._id} className="mb-4">
