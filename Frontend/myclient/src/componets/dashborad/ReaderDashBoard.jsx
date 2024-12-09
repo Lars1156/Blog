@@ -38,7 +38,7 @@ const ReaderDashboard = ({ token }) => {
       }
 
       // Send like request
-      await axios.post(`http://localhost:4007/api/${blogId}/like`, {
+      await axios.post(`http://localhost:4007/api/${blogId}/like`,{},{
         headers: {
           Authorization: `Bearer ${token}`,
         },
