@@ -57,14 +57,11 @@ const likeBlogs = async(req,res)=>{
          const{blogId} = req.params;
          console.log(blogId);
          console.log("User", user);
-          // Check if the user is logged in
          if(!user){
             return res.status(401).json({ msg: "Unauthorized: User not logged in" })
          }
-        //  Find the Blog by Id
         const blog = await Blog.findById(blogId);
         console.log(blog , "this is Blog");
-        
         // Check if the Blog exists
         if(!blog){
             return res.status(404).json({ msg: "Blog not found" });
