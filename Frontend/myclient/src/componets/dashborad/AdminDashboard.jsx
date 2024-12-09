@@ -14,12 +14,12 @@ const AdminDashboard = () => {
 
   return (
     <Container fluid>
-      <Row className="bg-dark text-white py-3">
+      <Row className="bg-bg-light text-black py-3">
         <Col md={10}>
           <h4>Welcome Admin</h4>
         </Col>
         <Col md={2} className="d-flex justify-content-end">
-          <Button variant="outline-light" onClick={handleLogout}>
+          <Button variant="outline-dark" onClick={handleLogout}>
             <BoxArrowRight /> Logout
           </Button>
         </Col>

@@ -26,7 +26,8 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.status === 200) {
-  
+        localStorage.setItem("token", data.token);
+
         switch (data.role) {
           case "admin":
             navigate("/admin-dashboard");
