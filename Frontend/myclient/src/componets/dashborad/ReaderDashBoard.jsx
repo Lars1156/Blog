@@ -1,13 +1,17 @@
 import React, { useState, useEffect  } from "react";
 import { Container, Row, Col, Card, Button, Form, InputGroup } from "react-bootstrap";
 import { Heart, HeartFill } from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
+import { BoxArrowRight } from "react-bootstrap-icons";
+
 import axios from "axios";
 
 const ReaderDashBoard = () =>{
 const [blogs , setBlogs] = useState([]);
 const [likes , setLikes ] = useState('');
 const [commite , setCommite] = useState('');
-const [error , setError]  = useState('')
+const [error , setError]  = useState('');
+const navigate  = useNavigate('')
 useEffect(() => {
     const fetchAllBlog = async () => {
       try {
@@ -56,9 +60,24 @@ const handleCommite = async(blogId)=>{
     } catch (error) {
         console.error("Error commenting on the blog:", error);
     }
-}
+};
+const handleLogout = () => {
+    navigate("/");
+  };
   return(
      <Container fluid>
+         <Row className="bg-light py-3 mb-4">
+        <Col>
+          <h3>Welcome to the Blogs </h3>
+        </Col>
+        <Button
+            variant="outline-dark"
+            className="d-none d-lg-block"
+            onClick={handleLogout}
+          >
+            <BoxArrowRight /> Logout
+          </Button>
+      </Row>
       <Row>
         {blogs.map((blog) => (
           <Col md={6} lg={4} key={blog._id} className="mb-4">
@@ -66,6 +85,7 @@ const handleCommite = async(blogId)=>{
               <Card.Body>
                 <Card.Title>{blog.title}</Card.Title>
                 <Card.Text>{blog.content}</Card.Text>
+                <Card.Text>{blog.category}</Card.Text>
                 <Card.Subtitle className="mb-2 text-muted">
                   By {blog.author?.userName || "Unknown Author"}
                 </Card.Subtitle>
